@@ -1,6 +1,3 @@
-Here is the Markdown source code for the notes above. You can copy and paste this directly into any Markdown editor (like Obsidian, VS Code, or GitHub).
-
-```markdown
 # Lecture Notes: Introduction to Digital Logic Design
 
 This lecture serves as the foundational entry point into the world of **Digital Systems**, contrasting them with analog counterparts and establishing the core logic that governs modern computing hardware.
