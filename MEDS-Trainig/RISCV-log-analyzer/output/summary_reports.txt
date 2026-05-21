@@ -1,0 +1,63 @@
+RISC-V Log Analysis - Summary Report
+Generated: 2026-05-19 12:14:50
+
+File: test_data/sample_fail.log
+=== RISC-V Simulation Log Analysis ===
+Log file : test_data/sample_fail.log
+Date     : 2026-05-19 12:14:50
+
+--- Results ---
+Total   : 3
+Passed  : 1 (33.3%)
+Failed  : 1
+Skipped : 1
+
+--- Failed Tests ---
+  1. rv32i-sll
+
+--- Timing ---
+Min : 0.82s  (rv32i-add)
+Max : 1.02s  (rv32i-sll)
+Avg : 0.92s
+
+[0;31m--- Verdict: FAIL ---[0m
+
+File: test_data/sample_pass.log
+=== RISC-V Simulation Log Analysis ===
+Log file : test_data/sample_pass.log
+Date     : 2026-05-19 12:14:50
+
+--- Results ---
+Total   : 3
+Passed  : 3 (100.0%)
+Failed  : 0
+Skipped : 0
+
+--- Timing ---
+Min : 0.50s  (rv32i-and)
+Max : 0.80s  (rv32i-add)
+Avg : 0.63s
+
+[0;32m--- Verdict: PASS ---[0m
+
+File: test_data/sample_sim.log
+=== RISC-V Simulation Log Analysis ===
+Log file : test_data/sample_sim.log
+Date     : 2026-05-19 12:14:50
+
+--- Results ---
+Total   : 4
+Passed  : 2 (50.0%)
+Failed  : 1
+Skipped : 1
+
+--- Failed Tests ---
+  1. rv32i-sll
+
+--- Timing ---
+Min : 0.65s  (rv32i-sub)
+Max : 1.02s  (rv32i-sll)
+Avg : 0.83s
+
+[0;31m--- Verdict: FAIL ---[0m
+

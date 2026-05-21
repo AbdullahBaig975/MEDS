@@ -1,39 +1,50 @@
 #!/bin/bash
 
+# exit immediately if:
+# - a command fails (-e)
+# - an undefined variable is used (-u)
+# - a command inside a pipeline fails (-o pipefail)
 set -euo pipefail
 
-print_help(){
-    echo "usage $0 <logfile> [options]"
-    echo "" 
-    echo "Arguments:"
-    echo " <logfile>        Path to simulation log file (required)"
-    echo ""
-    echo "options:"
-    echo
+echo "Checking required tools..."
+echo ""
 
+# list of commands/tools that must be present for the project to run
+REQUIRED_TOOLS=(
+    "bash"
+    "mkdir"
+    "date"
+    "grep"
+    "awk"
+)
 
-}
-analyze_log(){
-    local logfile="$1"
-    local pass_count=$(grep -c "TEST PASS:" "$logfile" || true)
-    local fail_count=$(grep -c "TEST FAIL:" "$logfile" || true)
-    local skip_count=$(grep -c "TEST SKIP:" "$logfiles" || true)
-    local pass_rate
-    if ["$total" -gt 0]; then
-        pass_rate=$(awk "BEGIN {printf \"%.1f\", ($pass_count / $total)*100}")
+# tracks whether all tools were found
+# set to false as soon as any tool is missing
+ALL_OK=true
+
+# loop through each tool in the required list
+for tool in "${REQUIRED_TOOLS[@]}"; do
+    # command -v checks if the tool exists in the system PATH
+    # >/dev/null 2>&1 suppresses any output from the check itself
+    if command -v "$tool" >/dev/null 2>&1; then
+        echo "[OK] $tool found at: $(command -v "$tool")"
     else
-        pass_rate=0.0
+        # print which tool is missing and flip the flag
+        echo "[MISSING] $tool - please install it to proceed."
+        ALL_OK=false
     fi
-    local failed_tests=$(grep "TEST FAIL" "$logfile" | awk '{print $5}' || true)
-    local times=$(grep -oP '\(\K[0-9]+\.[0-9]+(?=s\))' "$logfile" || true)
+done
 
-    local min_time max_time avg_time min_tests max_tests
+echo ""
 
-
-
-}
-
-
-
-
-
+# print final verdict after all tools have been checked
+if [ "$ALL_OK" = true ]; then
+    echo "All required tools are available. You can proceed with the setup."
+    echo ""
+    echo "Try Running: make all"
+else
+    # exit with code 1 to signal failure to any calling script or Makefile
+    echo "One or more required tools are missing."
+    echo "Please install them and run this script again."
+    exit 1
+fi
