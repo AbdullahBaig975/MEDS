@@ -1,0 +1,21 @@
+.data
+my_arr : .word 10 20 40 44 38 
+
+.text
+main:
+
+la s0, my_arr
+li s1, 5    #arr size
+li s2, 0    # i
+li t0, 0    # sum
+
+loop:
+bge s2, s1 done
+slli t1, s2, 2
+add t2, t1, s0
+lw t3, 0(t2)
+add t0, t0, t3
+addi s2, s2, 1 
+j loop
+
+done:

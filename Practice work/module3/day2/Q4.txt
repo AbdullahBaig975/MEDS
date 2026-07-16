@@ -1,0 +1,22 @@
+.data
+arra : .word 10, 20, 300, -50, 100
+
+.text
+main:
+la s0, arra
+li s1, 5        #size
+li t0, 0        # i=0
+li t1, 0        #this is the largest no
+
+loop:
+bge t0, s1 done
+slli t4, t0, 2
+add t2 , t4, s0
+lw t3, 0(t2)
+
+addi t0, t0, 1
+bgt t1, t3, loop
+mv t1, t3
+
+j loop
+done:

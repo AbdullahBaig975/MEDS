@@ -1,0 +1,14 @@
+.text 
+main:
+
+li a0, 0xDEADBEEF
+
+andi a1, a0, 0xFF
+
+srli a2, a0, 8
+andi a2, a2, 0xFF
+
+srli a3, a0, 16
+
+
+

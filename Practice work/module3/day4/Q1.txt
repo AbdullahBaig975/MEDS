@@ -1,0 +1,56 @@
+.data
+test_array: .word 4, -8, 15, 23, -2, 16
+array_size: .word 6
+
+.text
+.globl main
+
+main:
+    # --- Test max(a0, a1) ---
+    li a0, 42          # Argument 1
+    li a1, 99          # Argument 2
+    jal ra, max        # Call max (returns 99 in a0)
+    
+    # Print max result
+    li a7, 1           # Venus ecall 1: print integer
+    ecall
+    
+    # Print newline
+    li a0, 10
+    li a7, 11
+    ecall
+
+    # --- Test sum_array(ptr, size) ---
+    la a0, test_array  # Argument 1: pointer to array
+    lw a1, array_size  # Argument 2: size of array
+    jal ra, sum_array  # Call sum_array (returns 48 in a0)
+
+    # Print sum result
+    li a7, 1
+    ecall
+
+    # Exit program
+    li a7, 10
+    ecall
+
+# --- Function: max(a0, a1) -> a0 ---
+max:
+    bgt a0, a1, max_done # If a0 > a1, keep a0
+    mv a0, a1            # Else, return a1
+max_done:
+    jr ra
+
+# --- Function: sum_array(a0=ptr, a1=size) -> a0 ---
+sum_array:
+    li t0, 0           # t0 = running sum = 0
+    li t1, 0           # t1 = index i = 0
+sum_loop:
+    bge t1, a1, sum_exit # If i >= size, exit
+    lw t2, 0(a0)       # Load current element into t2
+    add t0, t0, t2     # sum += element
+    addi a0, a0, 4     # Move pointer to next word
+    addi t1, t1, 1     # i++
+    j sum_loop
+sum_exit:
+    mv a0, t0          # Return sum in a0
+    jr ra

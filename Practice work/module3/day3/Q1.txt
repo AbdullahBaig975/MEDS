@@ -1,0 +1,15 @@
+.text
+main:
+
+li t0, -3
+
+beq t0, zero, iszero
+ble t0, zero, isneg
+
+li a0, 1
+
+iszero:
+li a0, 0
+
+isneg:
+li a0, -1
